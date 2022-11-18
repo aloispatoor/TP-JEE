@@ -24,26 +24,15 @@ public class UpdateProduct extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int userId = Integer.parseInt(request.getParameter("userId"));
-		int productId = Integer.parseInt(request.getParameter("productId"));
+		int id = Integer.parseInt( request.getParameter("id") );
 
-		User user = UserDAO.getUserById(userId);
-		Product prod = ProductDAO.getProdById(productId);
+		Product product = ProductDAO.getProdById(id);
+		request.setAttribute("product", product);
+		HttpSession session = request.getSession(true);
 		
-		if(user != null) {
-			HttpSession session = request.getSession(true);
-			session.setAttribute("currentUser", user);
-			request.getRequestDispatcher("AddProduct.jsp").forward(request, response);
-		} else {
-			System.out.println("session issue");
-			request.setAttribute("error", "You're not logged in");
-		}
-		
-		if(prod != null) {
-			System.out.println("product added to attribute");
-
-			request.setAttribute("prod", prod);
-			request.getRequestDispatcher("UpdateProduct.jsp").forward(request, response);
+		if (product != null && (int)session.getAttribute("user_id") == id) {
+			System.out.println("product detected");
+			request.getRequestDispatcher("updateProduct.jsp").forward(request, response);
 		} else {
 			request.getRequestDispatcher("/listProducts").forward(request, response);
 		}
@@ -58,8 +47,8 @@ public class UpdateProduct extends HttpServlet {
 		Float price = Float.parseFloat(request.getParameter("txtPrice"));
 		Date updatedAt = new Date();
 		
-		int id = Integer.parseInt( request.getParameter("id") );
-		User user = UserDAO.getUserById(id);
+		int user_id = (int) request.getSession().getAttribute("user_id");
+		User user = UserDAO.getUserById(user_id);
 		
 		Product p = new Product(name, user, description, price, updatedAt);
 		

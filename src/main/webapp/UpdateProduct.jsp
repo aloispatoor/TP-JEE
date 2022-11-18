@@ -22,7 +22,7 @@
 				<label for='txtPrice'> Price :</label>
 				<input name='txtPrice' type='number' value='${p.price}'/>
 
-				<input name='btnSubmit' type='submit'/>
+				<input name='btnSubmit' type='submit' value="Send"/>
 			</form>	
 		</main>
 	</body>

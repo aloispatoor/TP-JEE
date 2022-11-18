@@ -26,13 +26,13 @@
 		<section>
 			<% for(Product p : ProductDAO.getAllProducts()) {%>
 			<article>
-				<h2>${p.getName()}</h2>
-				<p>${p.getDescription()}</p>
-				<p>${p.getPrice()} Euro</p>
-				<small>${p.getCreatedAt()}</small>
+				<h2><%=p.getName() %></h2>
+				<p><%=p.getDescription() %></p>
+				<p><%=p.getPrice() %> Euro</p>
+				<small><%=p.getCreatedAt() %></small>
 				<div class="button-container">
-					<a href='/TP-M2i/update?id=<%= p.getId() %>'>Update</a>
-					<a href='/TP-M2i/delete?id=<%= p.getId() %>'>Delete</a>
+					<a href='/TP-M2i/update?id=<%= p.getId() %>' class="danger">Update</a>
+					<a href='/TP-M2i/delete?id=<%= p.getId() %>' class="mid">Delete</a>
 				</div>
 			</article>
 			<% } %>

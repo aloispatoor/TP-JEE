@@ -20,7 +20,7 @@
 			<form method="POST" action="login">
 				<input name="txtLogin" type="text" value="${login}" placeholder="login">
 				<input name="txtPassword" type="password" value="${password}" placeholder="password">
-				<input name="btnConnect" type="submit">
+				<input name="btnConnect" type="submit" value="Send">
 			</form>
 		</main>
 	

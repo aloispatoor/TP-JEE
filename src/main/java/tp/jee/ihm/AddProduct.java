@@ -23,19 +23,9 @@ public class AddProduct extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("in GET");
-		int id = Integer.parseInt(request.getParameter("id"));
-
-		User user = UserDAO.getUserById(id);
-		
-		if(user != null) {
-			HttpSession session = request.getSession(true);
-			session.setAttribute("currentUser", user.getId());
-			request.getRequestDispatcher("AddProduct.jsp").forward(request, response);
-		} else {
-			System.out.println("Session issue");
-			request.setAttribute("error", "You're not logged in");
-		}
+		HttpSession session = request.getSession(true);
+		session.getAttribute("user_id");
+		request.getRequestDispatcher("/AddProduct.jsp").forward(request, response);
 	}
 
 	/**
@@ -43,23 +33,29 @@ public class AddProduct extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("in POST");
-		String name = request.getParameter("txtName");
-		String description = request.getParameter("txtDescription");
-		Float price = Float.parseFloat(request.getParameter("txtPrice"));
-		Date createdAt = new Date();
-		
-		HttpSession session = request.getSession(true);
-		int id = Integer.parseInt(request.getParameter("id"));
-		User user = UserDAO.getUserById(id);
-		session.setAttribute("currentUser", user);
-		
-		Product p = new Product(name, user, description, price, createdAt);
-		
-		if(ProductDAO.addProduct(p)) {
-			System.out.println("Product added");
-			request.getRequestDispatcher("/listProducts").forward(request, response);	
-		} else {
-			request.setAttribute("error", "Error at adding");
+		try {
+			
+			int user_id = (int) request.getSession().getAttribute("user_id");
+			System.out.println("User id: " + user_id);
+			User user = UserDAO.getUserById(user_id);
+			
+			String name = request.getParameter("txtName");
+			String description = request.getParameter("txtDescription");
+			Float price = Float.parseFloat(request.getParameter("txtPrice"));
+			Date createdAt = new Date(System.currentTimeMillis());
+			
+			
+			Product p = new Product(name, user, description, price, createdAt);
+			
+			if(ProductDAO.addProduct(p)) {
+				System.out.println("Product added");
+				request.getRequestDispatcher("/listProducts").forward(request, response);	
+			} else {
+				request.setAttribute("error", "Error at adding");
+				doGet(request, response);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 			doGet(request, response);
 		}
 		

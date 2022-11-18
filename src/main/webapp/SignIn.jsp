@@ -28,7 +28,7 @@
 				<label for='txtPasswordConfirmation'> Confirmation :</label>
 				<input name='txtPasswordConfirmation' type='password' value='${confirmation}'/>
 
-				<input name='btnSubmit' type='submit'/>
+				<input name='btnSubmit' type='submit' value="Send"/>
 			</form>	
 		</main>
 	</body>
