@@ -12,7 +12,7 @@
 			<h1>Sign In</h1>
 	
 			<% if (request.getAttribute("error") != null) {	%>
-				<h3>${error}</h3>
+				<h2>${error}</h2>
 			<% } %>
 		
 			<form method='post'>

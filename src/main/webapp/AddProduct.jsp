@@ -9,9 +9,16 @@
 	</head>
 	<body>
 		<main>
+		<% session.getAttribute("currentUser"); %>
 			<h1>Add a Product</h1>
+			<% if (request.getAttribute("error") != null) {	%>
+				<h2>${error}</h2>
+			<% } %>
 			
 			<form method='post'>
+				<label for='txtUserId'> User:</label>
+				<input name='txtUserId' type='text' value='${currentUser.id}'/>
+				
 				<label for='txtName'> Name:</label>
 				<input name='txtName' type='text' value='${name}'/>
 

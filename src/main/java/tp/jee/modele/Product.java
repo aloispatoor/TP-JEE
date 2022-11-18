@@ -1,14 +1,15 @@
 package tp.jee.modele;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Product {
-	int id;
-	String name;
-	String description;
-	float price;
-	Date createdAt;
-	Date updatedAt;
+	private int id;
+	private User user;
+	private String name;
+	private String description;
+	private float price;
+	private Date createdAt;
+	private Date updatedAt;
 	
 	public Product(int id, String name, String description, float price, Date createdAt, Date updatedAt) {
 		super();
@@ -21,14 +22,27 @@ public class Product {
 	}
 	
 	
-	public Product(int id, String name, String description, float price, Date updatedAt) {
+	public Product(int id, String name, User user, String description, float price, Date updatedAt) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.user = user;
 		this.description = description;
 		this.price = price;
 		this.updatedAt = updatedAt;
 	}
+
+
+	public Product(String name, User user, String description, float price, Date createdAt) {
+		super();
+		this.name = name;
+		this.user = user;
+		this.description = description;
+		this.price = price;
+		this.createdAt = createdAt;
+	}
+	
+	
 
 
 	public Product(String name, String description, float price, Date createdAt) {
@@ -68,14 +82,21 @@ public class Product {
 		return createdAt;
 	}
 	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
+		this.createdAt = new Date(System.currentTimeMillis());
 	}
 	public Date getUpdatedAt() {
 		return updatedAt;
 	}
 	public void setUpdatedAt(Date updatedAt) {
-		this.updatedAt = updatedAt;
+		this.updatedAt = new Date(System.currentTimeMillis());
 	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
 	
 	
 }

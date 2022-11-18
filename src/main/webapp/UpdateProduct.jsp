@@ -8,6 +8,22 @@
 	<link rel='stylesheet' type='text/css' href='style.css' />
 	</head>
 	<body>
-	
+		<main>
+		<% session.getAttribute("currentUser"); %>
+			<h1>Add a Product</h1>
+			
+			<form method='post'>
+				<label for='txtName'> Name:</label>
+				<input name='txtName' type='text' value='${p.name}'/>
+
+				<label for='txtDescription'> Description :</label>
+				<input name='txtDescription' type='text' value='${p.description}'/>
+
+				<label for='txtPrice'> Price :</label>
+				<input name='txtPrice' type='number' value='${p.price}'/>
+
+				<input name='btnSubmit' type='submit'/>
+			</form>	
+		</main>
 	</body>
 </html>

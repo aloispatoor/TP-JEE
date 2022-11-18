@@ -17,12 +17,43 @@ h1{
 	margin-bottom: 2em;
 }
 
-#homepage{
+main{
 	height: 100vh;
 	display:flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+}
+#ListProducts{
+	display:flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+form{
+	display:flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 1em;
+}
+
+input{
+	border: none;
+	font-size: 1em;
+}
+
+input[type="submit"]{
+	background-color: #9191ff;
+	padding: 0.5em 1em;
+	border-radius: 10px;
+	transition: all .3s ease-out;
+}
+input[type="submit"]:hover{
+	cursor: pointer;
+	color: white;
+	background-color: black;
 }
 
 .button-container{

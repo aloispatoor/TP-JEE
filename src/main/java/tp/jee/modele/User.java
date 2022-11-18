@@ -1,10 +1,10 @@
 package tp.jee.modele;
 
 public class User {
-	int id;
-	String email;
-	String login;
-	String password;
+	private int id;
+	private String email;
+	private String login;
+	private String password;
 	
 	public User(int id, String email, String login, String password) {
 		super();

@@ -49,6 +49,34 @@ public class UserDAO {
 		}
 		return false;	
 	}
+	
+	public static User getUserById(int id) {
+		User u = null;
+		
+		try {
+			Connection con = UtilConnexion.seConnecter();
+			
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM users WHERE id=?;");
+			ps.setInt(1, id);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			if ( rs.next()) {
+				u = new User(
+					rs.getInt("id"),
+					rs.getString("email"),
+					rs.getString("username"),
+					rs.getString("password")						
+				);
+			}
+			
+			rs.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return u;
+	}
 
 	
 	public static boolean isValidUser(String email, String login, String password, String confirmation) {

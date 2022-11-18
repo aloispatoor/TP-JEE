@@ -3,11 +3,12 @@ package tp.jee.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
 import tp.jee.modele.Product;
+import tp.jee.modele.User;
 
 public class ProductDAO {
 	
@@ -37,8 +38,38 @@ public class ProductDAO {
 		return listp;
 	}
 	
-	public static boolean addProduct(String name, String description, float price, Date createdAt) {
-		return addProduct(new Product(name, description, price, createdAt));
+	public static Product getProdById(int id) {
+		Product prod = null;
+		
+		try {
+			Connection con = UtilConnexion.seConnecter();
+			
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM products WHERE id=?;");
+			ps.setInt(1, id);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			if ( rs.next()) {
+				prod = new Product(
+					rs.getInt("id"),
+					rs.getString("name"),
+					rs.getString("description"),
+					rs.getFloat("price"),
+					rs.getDate("createdAt"),
+					rs.getDate("updatedAt")
+				);
+			}
+			
+			rs.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return prod;
+	}
+	
+	public static boolean addProduct(String name, String description, User user, float price, Date createdAt) {
+		return addProduct(new Product(name, user, description, price, createdAt));
 	}
 	
 	public static boolean addProduct(Product p) {
@@ -46,11 +77,11 @@ public class ProductDAO {
 		try {
 			Connection con = UtilConnexion.seConnecter();
 			
-			PreparedStatement ps = con.prepareStatement("INSERT INTO products(name, description, price) VALUE( ?, ?, ?);");
-			
+			PreparedStatement ps = con.prepareStatement("INSERT INTO products(name, description, price, user_id) VALUE( ?, ?, ?);");
 			ps.setString(1, p.getName());
 			ps.setString(2, p.getDescription());
 			ps.setFloat(3, p.getPrice());
+			// ps.setInt(4, p.getId());
 			
 			ps.executeUpdate();
 			
@@ -83,8 +114,8 @@ public class ProductDAO {
 		}
 	}
 	
-	public static boolean updateProduct(int id, String name, String description, float price, Date updatedAt) {
-		return updateProduct(new Product(id, name, description, price, updatedAt));
+	public static boolean updateProduct(int id, String name, User user, String description, float price, Date updatedAt) {
+		return updateProduct(new Product(id, name, user, description, price, updatedAt));
 	}
 	
 	public static boolean updateProduct(Product p) {

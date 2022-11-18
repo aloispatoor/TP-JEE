@@ -14,6 +14,9 @@
 	<body>
 		<main id="login">
 			<h1>Log in</h1>
+			<% if (request.getAttribute("error") != null) {	%>
+				<h2>${error}</h2>
+			<% } %>
 			<form method="POST" action="login">
 				<input name="txtLogin" type="text" value="${login}" placeholder="login">
 				<input name="txtPassword" type="password" value="${password}" placeholder="password">
